@@ -54,7 +54,7 @@ export const CaptionSettingsPanel = ({ settings, onChange }: CaptionSettingsProp
           </div>
 
           <div className="space-y-2">
-            <Label>Line Height: {settings.lineHeight}</Label>
+            <Label>Line Height: {settings.lineHeight.toFixed(1)}</Label>
             <Slider
               value={[settings.lineHeight]}
               onValueChange={([value]) => updateSetting('lineHeight', value)}

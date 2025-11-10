@@ -86,58 +86,65 @@ const Index = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="lg:col-span-1 space-y-6">
-            <ControlPanel
-              isRecording={isRecording}
-              audioLevel={audioLevel}
-              devices={devices}
-              selectedDevice={selectedDevice}
-              onDeviceChange={setSelectedDevice}
-              onStartRecording={handleStartRecording}
-              onStopRecording={handleStopRecording}
-            />
+        <div className="grid grid-cols-1 gap-6">
+          {/* Control Panel - Top Section */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="lg:col-span-2">
+              <ControlPanel
+                isRecording={isRecording}
+                audioLevel={audioLevel}
+                devices={devices}
+                selectedDevice={selectedDevice}
+                onDeviceChange={setSelectedDevice}
+                onStartRecording={handleStartRecording}
+                onStopRecording={handleStopRecording}
+              />
+            </div>
 
-            <Tabs defaultValue="settings" className="w-full">
-              <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="settings">Display Settings</TabsTrigger>
-                <TabsTrigger value="info">Info</TabsTrigger>
-              </TabsList>
-              <TabsContent value="settings">
-                <CaptionSettingsPanel
-                  settings={captionSettings}
-                  onChange={setCaptionSettings}
-                />
-              </TabsContent>
-              <TabsContent value="info">
-                <div className="bg-card border border-border rounded-lg p-6 space-y-4">
-                  <h3 className="font-semibold text-lg">How to Use with OBS/VMIX</h3>
-                  <ol className="list-decimal list-inside space-y-2 text-sm text-muted-foreground">
-                    <li>Start transcription from the control panel</li>
-                    <li>Copy the browser URL for caption display</li>
-                    <li>In OBS/VMIX, add a Browser Source</li>
-                    <li>Paste the URL and set dimensions</li>
-                    <li>Position the caption overlay on your stream</li>
-                  </ol>
-                  <div className="pt-4 border-t border-border">
-                    <p className="text-xs text-muted-foreground">
-                      Powered by Typhoon ASR Real-Time - Thai speech recognition
-                    </p>
+            <div className="lg:col-span-1">
+              <Tabs defaultValue="settings" className="w-full">
+                <TabsList className="grid w-full grid-cols-2">
+                  <TabsTrigger value="settings">Display</TabsTrigger>
+                  <TabsTrigger value="info">Info</TabsTrigger>
+                </TabsList>
+                <TabsContent value="settings">
+                  <CaptionSettingsPanel
+                    settings={captionSettings}
+                    onChange={setCaptionSettings}
+                  />
+                </TabsContent>
+                <TabsContent value="info">
+                  <div className="bg-card border border-border rounded-lg p-6 space-y-4">
+                    <h3 className="font-semibold text-lg">How to Use with OBS/VMIX</h3>
+                    <ol className="list-decimal list-inside space-y-2 text-sm text-muted-foreground">
+                      <li>Start transcription from the control panel</li>
+                      <li>Copy the browser URL for caption display</li>
+                      <li>In OBS/VMIX, add a Browser Source</li>
+                      <li>Paste the URL and set dimensions</li>
+                      <li>Position the caption overlay on your stream</li>
+                    </ol>
+                    <div className="pt-4 border-t border-border">
+                      <p className="text-xs text-muted-foreground">
+                        Powered by Typhoon ASR Real-Time - Thai speech recognition
+                      </p>
+                    </div>
                   </div>
-                </div>
-              </TabsContent>
-            </Tabs>
+                </TabsContent>
+              </Tabs>
+            </div>
           </div>
 
-          <div className="lg:col-span-2">
-            <div className="bg-card border border-border rounded-lg overflow-hidden">
-              <div className="bg-secondary px-6 py-3 border-b border-border">
-                <h3 className="font-semibold">Live Caption Preview</h3>
+          {/* Caption Display - Full Width */}
+          <div className="w-full">
+            <div className="bg-card border border-border rounded-lg overflow-hidden shadow-lg">
+              <div className="bg-secondary px-6 py-3 border-b border-border flex items-center justify-between">
+                <h3 className="font-semibold">Live Caption Preview - Full Width</h3>
+                <span className="text-xs text-muted-foreground">Ready for Browser Capture</span>
               </div>
               <CaptionDisplay
                 segments={segments}
                 settings={captionSettings}
-                className="min-h-[600px]"
+                className="min-h-[400px]"
               />
             </div>
           </div>
