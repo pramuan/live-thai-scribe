@@ -4,6 +4,7 @@ import { Slider } from '@/components/ui/slider';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
 import { Card } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
 
 interface CaptionSettingsProps {
   settings: CaptionSettings;
@@ -21,9 +22,19 @@ export const CaptionSettingsPanel = ({ settings, onChange }: CaptionSettingsProp
   return (
     <Card className="p-6 space-y-6 bg-card border-border">
       <div>
-        <h3 className="text-lg font-semibold mb-4">Caption Display Settings</h3>
+        <h3 className="text-lg font-semibold mb-4">ตั้งค่า</h3>
         
         <div className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="api-key">Typhoon ASR API Key</Label>
+            <Input
+              id="api-key"
+              type="password"
+              placeholder="ใส่ API Key ของคุณ"
+              value={settings.apiKey}
+              onChange={(e) => updateSetting('apiKey', e.target.value)}
+            />
+          </div>
           <div className="space-y-2">
             <Label>Layout</Label>
             <Select

@@ -19,6 +19,7 @@ export interface CaptionSettings {
   backgroundColor: string;
   textColor: string;
   translationColor: string;
+  apiKey: string;
 }
 
 export interface AudioSettings {

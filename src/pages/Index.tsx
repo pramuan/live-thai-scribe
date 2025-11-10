@@ -32,9 +32,10 @@ const Index = () => {
     layout: 'stacked',
     fontFamily: "'Sarabun', sans-serif",
     textAlign: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.8)',
-    textColor: '#ffffff',
-    translationColor: '#4ade80',
+    backgroundColor: '#ffffff',
+    textColor: '#000000',
+    translationColor: '#1e40af',
+    apiKey: '',
   });
 
   const handleStartRecording = async () => {
@@ -81,9 +82,6 @@ const Index = () => {
           <h1 className="text-4xl font-bold mb-2 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
             Live Transcription & Translation
           </h1>
-          <p className="text-muted-foreground">
-            Professional live caption system for broadcasting and streaming
-          </p>
         </div>
 
         <div className="grid grid-cols-1 gap-6">
@@ -115,19 +113,13 @@ const Index = () => {
                 </TabsContent>
                 <TabsContent value="info">
                   <div className="bg-card border border-border rounded-lg p-6 space-y-4">
-                    <h3 className="font-semibold text-lg">How to Use with OBS/VMIX</h3>
+                    <h3 className="font-semibold text-lg">การใช้งาน</h3>
                     <ol className="list-decimal list-inside space-y-2 text-sm text-muted-foreground">
-                      <li>Start transcription from the control panel</li>
-                      <li>Copy the browser URL for caption display</li>
-                      <li>In OBS/VMIX, add a Browser Source</li>
-                      <li>Paste the URL and set dimensions</li>
-                      <li>Position the caption overlay on your stream</li>
+                      <li>ตั้งค่า API Key ของ Typhoon ASR</li>
+                      <li>เลือกอุปกรณ์เสียงที่ต้องการ</li>
+                      <li>กดปุ่ม Start เพื่อเริ่มบันทึกและถ่ายทอดสด</li>
+                      <li>ใช้ Browser Source ใน OBS/VMIX เพื่อแสดงผล</li>
                     </ol>
-                    <div className="pt-4 border-t border-border">
-                      <p className="text-xs text-muted-foreground">
-                        Powered by Typhoon ASR Real-Time - Thai speech recognition
-                      </p>
-                    </div>
                   </div>
                 </TabsContent>
               </Tabs>
@@ -137,9 +129,8 @@ const Index = () => {
           {/* Caption Display - Full Width */}
           <div className="w-full">
             <div className="bg-card border border-border rounded-lg overflow-hidden shadow-lg">
-              <div className="bg-secondary px-6 py-3 border-b border-border flex items-center justify-between">
-                <h3 className="font-semibold">Live Caption Preview - Full Width</h3>
-                <span className="text-xs text-muted-foreground">Ready for Browser Capture</span>
+              <div className="bg-secondary px-6 py-3 border-b border-border">
+                <h3 className="font-semibold">Live Caption Preview</h3>
               </div>
               <CaptionDisplay
                 segments={segments}
