@@ -57,6 +57,14 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        caption: {
+          bg: "hsl(var(--caption-bg))",
+          text: "hsl(var(--caption-text))",
+          "text-secondary": "hsl(var(--caption-text-secondary))",
+          highlight: "hsl(var(--caption-highlight))",
+        },
+        live: "hsl(var(--live-indicator))",
+        active: "hsl(var(--active-indicator))",
       },
       borderRadius: {
         lg: "var(--radius)",
