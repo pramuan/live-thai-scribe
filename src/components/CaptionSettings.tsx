@@ -23,16 +23,6 @@ export const CaptionSettingsPanel = ({ settings, onChange }: CaptionSettingsProp
     <div className="space-y-6">
       <div className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="api-key">Typhoon ASR API Key</Label>
-            <Input
-              id="api-key"
-              type="password"
-              placeholder="ใส่ API Key ของคุณ"
-              value={settings.apiKey}
-              onChange={(e) => updateSetting('apiKey', e.target.value)}
-            />
-          </div>
-          <div className="space-y-2">
             <Label>Layout</Label>
             <Select
               value={settings.layout}
