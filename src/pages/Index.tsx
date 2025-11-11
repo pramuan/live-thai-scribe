@@ -5,8 +5,10 @@ import { ControlPanel } from '@/components/ControlPanel';
 import { CaptionDisplay } from '@/components/CaptionDisplay';
 import { CaptionSettingsPanel } from '@/components/CaptionSettings';
 import { TranscriptionSegment, CaptionSettings } from '@/types/transcription';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useToast } from '@/hooks/use-toast';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
+import { Settings } from 'lucide-react';
 
 const Index = () => {
   const { toast } = useToast();
@@ -78,53 +80,41 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <div className="container mx-auto p-6 max-w-7xl">
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold mb-2 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+        <div className="mb-8 flex items-center justify-between">
+          <h1 className="text-4xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
             Live Transcription & Translation
           </h1>
+          
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button variant="outline" size="lg">
+                <Settings className="mr-2 h-5 w-5" />
+                Settings
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+              <DialogHeader>
+                <DialogTitle>ตั้งค่า</DialogTitle>
+              </DialogHeader>
+              <CaptionSettingsPanel
+                settings={captionSettings}
+                onChange={setCaptionSettings}
+              />
+            </DialogContent>
+          </Dialog>
         </div>
 
         <div className="grid grid-cols-1 gap-6">
-          {/* Control Panel - Top Section */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div className="lg:col-span-2">
-              <ControlPanel
-                isRecording={isRecording}
-                audioLevel={audioLevel}
-                devices={devices}
-                selectedDevice={selectedDevice}
-                onDeviceChange={setSelectedDevice}
-                onStartRecording={handleStartRecording}
-                onStopRecording={handleStopRecording}
-              />
-            </div>
-
-            <div className="lg:col-span-1">
-              <Tabs defaultValue="settings" className="w-full">
-                <TabsList className="grid w-full grid-cols-2">
-                  <TabsTrigger value="settings">Display</TabsTrigger>
-                  <TabsTrigger value="info">Info</TabsTrigger>
-                </TabsList>
-                <TabsContent value="settings">
-                  <CaptionSettingsPanel
-                    settings={captionSettings}
-                    onChange={setCaptionSettings}
-                  />
-                </TabsContent>
-                <TabsContent value="info">
-                  <div className="bg-card border border-border rounded-lg p-6 space-y-4">
-                    <h3 className="font-semibold text-lg">การใช้งาน</h3>
-                    <ol className="list-decimal list-inside space-y-2 text-sm text-muted-foreground">
-                      <li>ตั้งค่า API Key ของ Typhoon ASR</li>
-                      <li>เลือกอุปกรณ์เสียงที่ต้องการ</li>
-                      <li>กดปุ่ม Start เพื่อเริ่มบันทึกและถ่ายทอดสด</li>
-                      <li>ใช้ Browser Source ใน OBS/VMIX เพื่อแสดงผล</li>
-                    </ol>
-                  </div>
-                </TabsContent>
-              </Tabs>
-            </div>
-          </div>
+          {/* Control Panel */}
+          <ControlPanel
+            isRecording={isRecording}
+            audioLevel={audioLevel}
+            devices={devices}
+            selectedDevice={selectedDevice}
+            onDeviceChange={setSelectedDevice}
+            onStartRecording={handleStartRecording}
+            onStopRecording={handleStopRecording}
+          />
 
           {/* Caption Display - Full Width */}
           <div className="w-full">

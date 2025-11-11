@@ -20,11 +20,8 @@ export const CaptionSettingsPanel = ({ settings, onChange }: CaptionSettingsProp
   };
 
   return (
-    <Card className="p-6 space-y-6 bg-card border-border">
-      <div>
-        <h3 className="text-lg font-semibold mb-4">ตั้งค่า</h3>
-        
-        <div className="space-y-4">
+    <div className="space-y-6">
+      <div className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="api-key">Typhoon ASR API Key</Label>
             <Input
@@ -139,8 +136,7 @@ export const CaptionSettingsPanel = ({ settings, onChange }: CaptionSettingsProp
               </SelectContent>
             </Select>
           </div>
-        </div>
       </div>
-    </Card>
+    </div>
   );
 };
