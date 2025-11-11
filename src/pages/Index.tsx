@@ -7,9 +7,7 @@ import { TranscriptionSegment, CaptionSettings } from '@/types/transcription';
 import { useToast } from '@/hooks/use-toast';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
 import { AudioDeviceSelector } from '@/components/AudioDeviceSelector';
 import { VoiceActivityIndicator } from '@/components/VoiceActivityIndicator';
 import { Mic, Square } from 'lucide-react';
@@ -97,19 +95,6 @@ const Index = () => {
           
           <TabsContent value="transcription" className="flex-1 flex flex-col mt-0">
             <div className="flex-1 p-6 space-y-6 overflow-y-auto">
-              {/* API Key */}
-              <div className="space-y-2">
-                <Label>Model</Label>
-                <Select defaultValue="typhoon-asr-realtime">
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="typhoon-asr-realtime">typhoon-asr-realtime</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
               {/* Mode Tabs */}
               <div className="space-y-2">
                 <Tabs defaultValue="realtime">
@@ -120,38 +105,18 @@ const Index = () => {
                 </Tabs>
               </div>
 
-              {/* API Key Input */}
-              <div className="space-y-2">
-                <Label htmlFor="api-key">Typhoon ASR API Key</Label>
-                <Input
-                  id="api-key"
-                  type="password"
-                  placeholder="ใส่ API Key ของคุณ"
-                  value={captionSettings.apiKey}
-                  onChange={(e) => setCaptionSettings({ ...captionSettings, apiKey: e.target.value })}
-                />
-              </div>
-
               {/* Audio Input Device */}
-              <div className="space-y-2">
-                <Label>Audio Input Device</Label>
-                <AudioDeviceSelector
-                  devices={devices}
-                  selectedDevice={selectedDevice}
-                  onDeviceChange={setSelectedDevice}
-                  disabled={isRecording}
-                />
-              </div>
+              <AudioDeviceSelector
+                devices={devices}
+                selectedDevice={selectedDevice}
+                onDeviceChange={setSelectedDevice}
+                disabled={isRecording}
+              />
 
               {/* Voice Activity */}
               <div className="space-y-2">
                 <Label>Voice Activity</Label>
                 <VoiceActivityIndicator level={audioLevel} isActive={isRecording && audioLevel > 0.1} />
-              </div>
-
-              {/* Time Remaining */}
-              <div className="text-sm text-muted-foreground">
-                Time Remaining: 5:00
               </div>
             </div>
 
@@ -180,8 +145,8 @@ const Index = () => {
             </div>
           </TabsContent>
 
-          <TabsContent value="settings" className="flex-1 mt-0 overflow-y-auto">
-            <div className="p-6">
+          <TabsContent value="settings" className="flex-1 mt-0">
+            <div className="p-6 h-full overflow-y-auto">
               <CaptionSettingsPanel
                 settings={captionSettings}
                 onChange={setCaptionSettings}
