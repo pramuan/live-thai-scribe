@@ -28,7 +28,7 @@ const Index = () => {
     lineHeight: 1.5,
     maxLines: 3,
     showOriginal: true,
-    showTranslation: true,
+    showTranslation: false,
     layout: 'stacked',
     fontFamily: "'Sarabun', sans-serif",
     textAlign: 'center',

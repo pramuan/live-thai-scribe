@@ -95,11 +95,6 @@ export const CaptionDisplay = ({ segments, settings, className }: CaptionDisplay
             )}
           >
             {renderSegment(segment)}
-            {segment.timestamp && (
-              <div className="text-xs opacity-50 mt-1">
-                {new Date(segment.timestamp).toLocaleTimeString('th-TH')}
-              </div>
-            )}
           </div>
         ))}
       </div>

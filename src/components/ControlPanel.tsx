@@ -26,16 +26,6 @@ export const ControlPanel = ({
 }: ControlPanelProps) => {
   return (
     <Card className="p-6 space-y-6 bg-card border-border">
-      <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold">Live Transcription Control</h2>
-        {isRecording && (
-          <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-live/10 border border-live">
-            <Radio className="h-4 w-4 text-live animate-pulse" />
-            <span className="text-sm font-medium text-live">LIVE</span>
-          </div>
-        )}
-      </div>
-
       <AudioDeviceSelector
         devices={devices}
         selectedDevice={selectedDevice}
@@ -69,11 +59,6 @@ export const ControlPanel = ({
             Stop Transcription
           </Button>
         )}
-      </div>
-
-      <div className="text-xs text-muted-foreground space-y-1 pt-4 border-t border-border">
-        <p>• For OBS/VMIX: Use Browser Source with the caption display URL</p>
-        <p>• Powered by Typhoon ASR Real-Time</p>
       </div>
     </Card>
   );
