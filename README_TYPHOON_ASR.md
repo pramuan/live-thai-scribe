@@ -94,7 +94,6 @@ const Index = () => {
               <TabsTrigger value="transcription" className="flex-1">Transcription</TabsTrigger>
               <TabsTrigger value="settings" className="flex-1">Settings</TabsTrigger>
             </TabsList>
-          
           <TabsContent value="transcription" className="flex-1 flex flex-col mt-0">
             <div className="flex-1 p-4 space-y-4 overflow-y-auto">
               {/* Audio Input Device */}
@@ -136,7 +135,6 @@ const Index = () => {
               )}
             </div>
           </TabsContent>
-
           <TabsContent value="settings" className="flex-1 mt-0">
             <div className="p-4 h-full overflow-y-auto">
               <CaptionSettingsPanel
