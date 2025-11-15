@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { AudioDeviceSelector } from '@/components/AudioDeviceSelector';
 import { VoiceActivityIndicator } from '@/components/VoiceActivityIndicator';
-import { Mic, Square, Settings } from 'lucide-react';
+import { Mic, Square, Settings, ChevronDown } from 'lucide-react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 
 const Index = () => {
@@ -99,27 +99,6 @@ const Index = () => {
             disabled={isRecording}
           />
 
-          {/* Configuration Collapsible */}
-          <Collapsible open={isConfigOpen} onOpenChange={setIsConfigOpen}>
-            <CollapsibleTrigger asChild>
-              <Button variant="outline" className="w-full justify-between">
-                <span className="flex items-center gap-2">
-                  <Settings className="h-4 w-4" />
-                  Configuration
-                </span>
-                <span className="text-xs text-muted-foreground">
-                  {isConfigOpen ? 'Hide' : 'Show'}
-                </span>
-              </Button>
-            </CollapsibleTrigger>
-            <CollapsibleContent className="mt-4">
-              <CaptionSettingsPanel
-                settings={captionSettings}
-                onChange={setCaptionSettings}
-              />
-            </CollapsibleContent>
-          </Collapsible>
-
           {/* Voice Activity */}
           <div className="space-y-2">
             <div className="flex items-center justify-between">
@@ -130,6 +109,25 @@ const Index = () => {
             </div>
             <VoiceActivityIndicator level={audioLevel} isActive={isRecording && audioLevel > 0.1} />
           </div>
+
+          {/* Configuration Collapsible */}
+          <Collapsible open={isConfigOpen} onOpenChange={setIsConfigOpen}>
+            <CollapsibleTrigger asChild>
+              <Button variant="outline" className="w-full justify-between">
+                <span className="flex items-center gap-2">
+                  <Settings className="h-4 w-4" />
+                  Configuration
+                </span>
+                <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${isConfigOpen ? 'rotate-180' : ''}`} />
+              </Button>
+            </CollapsibleTrigger>
+            <CollapsibleContent className="mt-4">
+              <CaptionSettingsPanel
+                settings={captionSettings}
+                onChange={setCaptionSettings}
+              />
+            </CollapsibleContent>
+          </Collapsible>
 
           {/* Start Recording Button */}
           <div className="pt-2">
