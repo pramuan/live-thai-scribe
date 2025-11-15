@@ -11,32 +11,37 @@ export const VoiceActivityIndicator = ({
   isActive,
   className,
 }: VoiceActivityIndicatorProps) => {
-  const bars = 20;
+  const bars = 40; // More bars for smoother wave
   
   const getBarHeight = (index: number) => {
-    const baseHeight = 10;
+    const baseHeight = 5;
     const maxHeight = 100;
     
-    // Create wave pattern with more bars
+    // Create wave spectrum frequency pattern
     const normalizedLevel = Math.min(level * 2, 1);
-    const centerBar = Math.floor(bars / 2);
-    const distance = Math.abs(index - centerBar);
-    const heightMultiplier = 1 - (distance * 0.05);
     
-    return baseHeight + (maxHeight - baseHeight) * normalizedLevel * heightMultiplier;
+    // Create a smooth wave pattern across the spectrum
+    // Lower frequencies on the left, higher on the right
+    const frequency = (index / bars) * Math.PI * 4;
+    const wave = Math.sin(frequency + Date.now() / 200) * 0.5 + 0.5;
+    
+    // Combine wave with audio level
+    const heightMultiplier = wave * normalizedLevel;
+    
+    return baseHeight + (maxHeight - baseHeight) * heightMultiplier;
   };
 
   return (
-    <div className={cn('flex items-end justify-center gap-1 h-32 w-full', className)}>
+    <div className={cn('flex items-end justify-center gap-0.5 h-32 w-full bg-card rounded-md p-2', className)}>
       {Array.from({ length: bars }).map((_, index) => (
         <div
           key={index}
           className={cn(
-            'flex-1 rounded-full transition-all duration-75',
+            'flex-1 rounded-sm transition-all duration-100',
             isActive ? 'bg-primary' : 'bg-muted'
           )}
           style={{
-            height: `${isActive ? getBarHeight(index) : 10}%`,
+            height: `${isActive ? getBarHeight(index) : 5}%`,
           }}
         />
       ))}
