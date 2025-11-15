@@ -9,7 +9,8 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { AudioDeviceSelector } from '@/components/AudioDeviceSelector';
 import { VoiceActivityIndicator } from '@/components/VoiceActivityIndicator';
-import { Mic, Square } from 'lucide-react';
+import { Mic, Square, Settings } from 'lucide-react';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 
 const Index = () => {
   const { toast } = useToast();
@@ -40,6 +41,8 @@ const Index = () => {
     translationColor: '#1e40af',
     apiKey: '',
   });
+
+  const [isConfigOpen, setIsConfigOpen] = useState(false);
 
   const handleStartRecording = async () => {
     try {
@@ -87,31 +90,49 @@ const Index = () => {
 
       <div className="flex" style={{ height: 'calc(100vh - 4rem)' }}>
         {/* Left Panel - Settings */}
-        <div className="w-[400px] bg-card border-r border-border flex flex-col">
-          <div className="flex-1 p-4 space-y-4 overflow-y-auto">
-            {/* Audio Input Device */}
-            <AudioDeviceSelector
-              devices={devices}
-              selectedDevice={selectedDevice}
-              onDeviceChange={setSelectedDevice}
-              disabled={isRecording}
-            />
+        <div className="w-[400px] bg-card border-r border-border p-4 space-y-4 overflow-y-auto">
+          {/* Audio Input Device */}
+          <AudioDeviceSelector
+            devices={devices}
+            selectedDevice={selectedDevice}
+            onDeviceChange={setSelectedDevice}
+            disabled={isRecording}
+          />
 
-            {/* Caption Settings */}
-            <CaptionSettingsPanel
-              settings={captionSettings}
-              onChange={setCaptionSettings}
-            />
+          {/* Configuration Collapsible */}
+          <Collapsible open={isConfigOpen} onOpenChange={setIsConfigOpen}>
+            <CollapsibleTrigger asChild>
+              <Button variant="outline" className="w-full justify-between">
+                <span className="flex items-center gap-2">
+                  <Settings className="h-4 w-4" />
+                  Configuration
+                </span>
+                <span className="text-xs text-muted-foreground">
+                  {isConfigOpen ? 'Hide' : 'Show'}
+                </span>
+              </Button>
+            </CollapsibleTrigger>
+            <CollapsibleContent className="mt-4">
+              <CaptionSettingsPanel
+                settings={captionSettings}
+                onChange={setCaptionSettings}
+              />
+            </CollapsibleContent>
+          </Collapsible>
 
-            {/* Voice Activity */}
-            <div className="space-y-2">
+          {/* Voice Activity */}
+          <div className="space-y-2">
+            <div className="flex items-center justify-between">
               <Label>Voice Activity</Label>
-              <VoiceActivityIndicator level={audioLevel} isActive={isRecording && audioLevel > 0.1} />
+              <span className="text-sm text-muted-foreground">
+                {isRecording && audioLevel > 0.1 ? 'Active' : 'Inactive'}
+              </span>
             </div>
+            <VoiceActivityIndicator level={audioLevel} isActive={isRecording && audioLevel > 0.1} />
           </div>
 
-          {/* Start Recording Button - Fixed at bottom */}
-          <div className="p-4 border-t border-border">
+          {/* Start Recording Button */}
+          <div className="pt-2">
             {!isRecording ? (
               <Button
                 onClick={handleStartRecording}
@@ -136,11 +157,11 @@ const Index = () => {
         </div>
 
         {/* Right Panel - Caption Display */}
-        <div className="flex-1 flex flex-col">
+        <div className="flex-1 flex items-center justify-center p-8">
           <CaptionDisplay
             segments={segments}
             settings={captionSettings}
-            className="h-full"
+            className="w-full max-w-4xl"
           />
         </div>
       </div>
