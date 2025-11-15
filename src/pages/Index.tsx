@@ -87,64 +87,52 @@ const Index = () => {
 
       <div className="flex" style={{ height: 'calc(100vh - 4rem)' }}>
         {/* Left Panel - Settings */}
-        <div className="w-[360px] bg-card border-r border-border flex flex-col">
-          <Tabs defaultValue="transcription" className="flex-1 flex flex-col">
-            <TabsList className="mx-4 mt-4">
-              <TabsTrigger value="transcription" className="flex-1">Transcription</TabsTrigger>
-              <TabsTrigger value="settings" className="flex-1">Settings</TabsTrigger>
-            </TabsList>
-          
-          <TabsContent value="transcription" className="flex-1 flex flex-col mt-0">
-            <div className="flex-1 p-4 space-y-4 overflow-y-auto">
-              {/* Audio Input Device */}
-              <AudioDeviceSelector
-                devices={devices}
-                selectedDevice={selectedDevice}
-                onDeviceChange={setSelectedDevice}
-                disabled={isRecording}
-              />
+        <div className="w-[400px] bg-card border-r border-border flex flex-col">
+          <div className="flex-1 p-4 space-y-4 overflow-y-auto">
+            {/* Audio Input Device */}
+            <AudioDeviceSelector
+              devices={devices}
+              selectedDevice={selectedDevice}
+              onDeviceChange={setSelectedDevice}
+              disabled={isRecording}
+            />
 
-              {/* Voice Activity */}
-              <div className="space-y-2">
-                <Label>Voice Activity</Label>
-                <VoiceActivityIndicator level={audioLevel} isActive={isRecording && audioLevel > 0.1} />
-              </div>
-            </div>
+            {/* Caption Settings */}
+            <CaptionSettingsPanel
+              settings={captionSettings}
+              onChange={setCaptionSettings}
+            />
 
-            {/* Start Recording Button - Fixed at bottom */}
-            <div className="p-4 border-t border-border">
-              {!isRecording ? (
-                <Button
-                  onClick={handleStartRecording}
-                  className="w-full bg-primary hover:bg-primary/90 text-primary-foreground"
-                  size="lg"
-                >
-                  <Mic className="mr-2 h-5 w-5" />
-                  Start Recording
-                </Button>
-              ) : (
-                <Button
-                  onClick={handleStopRecording}
-                  variant="destructive"
-                  className="w-full"
-                  size="lg"
-                >
-                  <Square className="mr-2 h-5 w-5" />
-                  Stop Recording
-                </Button>
-              )}
+            {/* Voice Activity */}
+            <div className="space-y-2">
+              <Label>Voice Activity</Label>
+              <VoiceActivityIndicator level={audioLevel} isActive={isRecording && audioLevel > 0.1} />
             </div>
-          </TabsContent>
+          </div>
 
-          <TabsContent value="settings" className="flex-1 mt-0">
-            <div className="p-4 h-full overflow-y-auto">
-              <CaptionSettingsPanel
-                settings={captionSettings}
-                onChange={setCaptionSettings}
-              />
-            </div>
-          </TabsContent>
-        </Tabs>
+          {/* Start Recording Button - Fixed at bottom */}
+          <div className="p-4 border-t border-border">
+            {!isRecording ? (
+              <Button
+                onClick={handleStartRecording}
+                className="w-full bg-primary hover:bg-primary/90 text-primary-foreground"
+                size="lg"
+              >
+                <Mic className="mr-2 h-5 w-5" />
+                Start Recording
+              </Button>
+            ) : (
+              <Button
+                onClick={handleStopRecording}
+                variant="destructive"
+                className="w-full"
+                size="lg"
+              >
+                <Square className="mr-2 h-5 w-5" />
+                Stop Recording
+              </Button>
+            )}
+          </div>
         </div>
 
         {/* Right Panel - Caption Display */}
