@@ -5,7 +5,6 @@ import { CaptionDisplay } from '@/components/CaptionDisplay';
 import { CaptionSettingsPanel } from '@/components/CaptionSettings';
 import { TranscriptionSegment, CaptionSettings } from '@/types/transcription';
 import { useToast } from '@/hooks/use-toast';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { AudioDeviceSelector } from '@/components/AudioDeviceSelector';
