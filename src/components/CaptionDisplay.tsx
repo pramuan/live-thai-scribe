@@ -6,9 +6,15 @@ interface CaptionDisplayProps {
   segments: TranscriptionSegment[];
   settings: CaptionSettings;
   className?: string;
+  showPlaceholder?: boolean;
 }
 
-export const CaptionDisplay = ({ segments, settings, className }: CaptionDisplayProps) => {
+export const CaptionDisplay = ({
+  segments,
+  settings,
+  className,
+  showPlaceholder = true
+}: CaptionDisplayProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -86,17 +92,23 @@ export const CaptionDisplay = ({ segments, settings, className }: CaptionDisplay
       }}
     >
       <div className="space-y-4 p-6">
-        {visibleSegments.map((segment) => (
-          <div
-            key={segment.id}
-            className={cn(
-              'caption-segment transition-opacity duration-300',
-              segment.isFinal ? 'opacity-100' : 'opacity-75'
-            )}
-          >
-            {renderSegment(segment)}
+        {visibleSegments.length === 0 && showPlaceholder ? (
+          <div className="text-gray-400 text-lg font-normal text-center py-10">
+            Waiting for transcription...
           </div>
-        ))}
+        ) : (
+          visibleSegments.map((segment) => (
+            <div
+              key={segment.id}
+              className={cn(
+                'caption-segment transition-opacity duration-300',
+                segment.isFinal ? 'opacity-100' : 'opacity-75'
+              )}
+            >
+              {renderSegment(segment)}
+            </div>
+          ))
+        )}
       </div>
     </div>
   );

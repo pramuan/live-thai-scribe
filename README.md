@@ -1,73 +1,87 @@
-# Welcome to your Lovable project
+# Thai STT - Live Transcription & Translation System
+**Powered by 3PT Live Streaming**
 
-## Project info
+A professional, real-time Speech-to-Text (STT) application designed for live broadcasting. It utilizes the **Typhoon ASR** model from SCB10X for high-accuracy Thai transcription and integrates seamlessly with OBS/vMix via a transparent browser source.
 
-**URL**: https://lovable.dev/projects/94225bec-6629-4462-beb3-250874458323
+## 🚀 Key Features
 
-## How can I edit this code?
+*   **Real-time Thai Transcription**: Low-latency ASR using the `scb10x/typhoon-asr-realtime` model.
+*   **OBS & vMix Integration**: Dedicated `/display` page with transparent background for overlaying captions on live streams.
+*   **Smart Silence Detection**: Automatically clears the screen when the speaker stops talking (VAD - Voice Activity Detection).
+*   **Customizable Appearance**: Real-time adjustment of font size, color, background, and alignment.
+*   **Dual-View Sync**: Settings changed on the control panel immediately propagate to the OBS display view.
+*   **Optimized Performance**:
+    *   **Low Latency**: Tuned audio buffer (2048 samples) for rapid feedback (~128ms chunking).
+    *   **Non-blocking Inference**: ASR processing runs on separate threads to keep the UI and WebSocket responsive.
+    *   **Resource Management**: Optimized CPU thread usage `torch.set_num_threads(4)`.
 
-There are several ways of editing your application.
+## 🛠 Tech Stack
 
-**Use Lovable**
+### Frontend
+*   **Framework**: React (Vite) + TypeScript
+*   **UI Library**: Shadcn/UI + Tailwind CSS
+*   **State Management**: React Hooks + LocalStorage (for cross-tab sync)
+*   **Communication**: WebSockets (Real-time audio streaming & text broadcasting)
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/94225bec-6629-4462-beb3-250874458323) and start prompting.
+### Backend
+*   **Server**: Python FastAPI
+*   **ASR Engine**: [Typhoon ASR](https://github.com/scb10x/typhoon-asr) (SCB10X) + NVIDIA NeMo Toolkit
+*   **Processing**: PyTorch, NumPy, SoundFile
+*   **Concurrency**: `asyncio` for WebSocket handling + `run_in_executor` for blocking model inference.
 
-Changes made via Lovable will be committed automatically to this repo.
+## 📦 Installation & Setup
 
-**Use your preferred IDE**
+### 1. Backend Setup (Python)
+Ensure you have Python 3.10+ and CUDA installed (recommended for GPU acceleration).
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+```bash
+# Create and activate virtual environment
+python -m venv .venv
+# Windows
+.\.venv\Scripts\activate
+# Linux/Mac
+source .venv/bin/activate
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+# Install dependencies (see requirements.txt for full list)
+pip install fastapi uvicorn websockets numpy torch soundfile librosa
+# Note: typhoon-asr and nemo-toolkit installation might require specific steps depending on your OS/CUDA version.
 ```
 
-**Edit a file directly in GitHub**
+**Running the Server:**
+```bash
+python server.py
+# Server will start on http://localhost:8000
+```
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### 2. Frontend Setup (React)
+```bash
+# Install Node.js dependencies
+npm install
 
-**Use GitHub Codespaces**
+# Run Development Server
+npm run dev
+# App will open at http://localhost:8080
+```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## 🎬 Usage Guide
 
-## What technologies are used for this project?
+1.  **Start the System**: Ensure both `server.py` and `npm run dev` are running.
+2.  **Open Control Panel**: Go to `http://localhost:8080`.
+3.  **Select Audio Source**: Choose your microphone from the dropdown list.
+4.  **Start Transcription**: Click **"Start transcription"**.
+5.  **Customize Style**: Open "Caption Settings" to adjust text size, colors, or layout.
+6.  **Connect to OBS**:
+    *   Click the **"VMIX/OBS Link"** button to copy the URL.
+    *   In OBS, create a **Browser Source**.
+    *   Paste the URL (`http://localhost:8080/display`).
+    *   Set Width/Height (e.g., 1920x200).
+    *   **Important**: Enable "Refresh browser when scene becomes active" if needed.
+    *   The background is transparent by default.
 
-This project is built with:
+## ⚙️ Configuration Notes
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+*   **Silence Detection**: The server monitors audio energy (RMS). If silence persists for >3 seconds, the caption is cleared.
+*   **Model Loading**: The model loads once at startup (`startup_event`). The first request might have a slight warmup delay.
 
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/94225bec-6629-4462-beb3-250874458323) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+## 📝 License
+Internal project for **3PT Live Streaming**.
