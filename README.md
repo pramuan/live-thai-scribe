@@ -30,36 +30,47 @@ A professional, real-time Speech-to-Text (STT) application designed for live bro
 
 ## 📦 Installation & Setup
 
-### 1. Backend Setup (Python)
-Ensure you have Python 3.10+ and CUDA installed (recommended for GPU acceleration).
+### 1. Prerequisite Setup
+Ensure you have Python 3.10+, Node.js, and CUDA installed (recommended for GPU acceleration).
 
 ```bash
-# Create and activate virtual environment
+# 1. Create and activate virtual environment
 python -m venv .venv
 # Windows
 .\.venv\Scripts\activate
 # Linux/Mac
 source .venv/bin/activate
 
-# Install dependencies (see requirements.txt for full list)
+# 2. Install Python dependencies
 pip install fastapi uvicorn websockets numpy torch soundfile librosa
 # Note: typhoon-asr and nemo-toolkit installation might require specific steps depending on your OS/CUDA version.
-```
 
-**Running the Server:**
-```bash
-python server.py
-# Server will start on http://localhost:8000
-```
-
-### 2. Frontend Setup (React)
-```bash
-# Install Node.js dependencies
+# 3. Install Node.js dependencies
 npm install
+```
 
-# Run Development Server
+### 2. Quick Start (Recommended)
+Launch both the backend and frontend with a single command. The browser will open automatically when ready.
+
+```bash
+npm run dev:all
+# - Starts Python Backend (Port 8000)
+# - Waits for health check
+# - Starts React Frontend (Port 8080)
+# - Opens Browser
+```
+
+### 3. Manual Start (Optional)
+If you prefer to run services separately:
+
+**Backend:**
+```bash
+& .\.venv\Scripts\python.exe server.py
+```
+
+**Frontend:**
+```bash
 npm run dev
-# App will open at http://localhost:8080
 ```
 
 ## 🎬 Usage Guide

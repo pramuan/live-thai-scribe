@@ -79,16 +79,23 @@ export const CaptionDisplay = ({
 
   const visibleSegments = segments.slice(-settings.maxLines);
 
+  const PADDING_Y = 48; // p-6 = 24px * 2
+  const contentHeight = settings.fontSize * settings.lineHeight * settings.maxLines;
+  const calculatedMaxHeight = contentHeight + PADDING_Y;
+
   return (
     <div
       ref={containerRef}
-      className={cn('caption-container overflow-auto', className)}
+      // Change overflow-auto to overflow-hidden to enforce strict visual max lines
+      // We rely on the useEffect scrolling to bottom to show the latest text
+      className={cn('caption-container overflow-hidden', className)}
       style={{
         fontFamily: settings.fontFamily,
         fontSize: `${settings.fontSize}px`,
         lineHeight: settings.lineHeight,
         textAlign: settings.textAlign,
         backgroundColor: settings.backgroundColor,
+        height: `${calculatedMaxHeight}px`, // Enforce fixed height
       }}
     >
       <div className="space-y-4 p-6">

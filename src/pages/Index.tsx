@@ -28,6 +28,36 @@ const Index = () => {
   const [segments, setSegments] = useState<TranscriptionSegment[]>([]);
 
   useEffect(() => {
+    // Poll for backend readiness
+    const checkBackend = async () => {
+      try {
+        const response = await fetch('http://localhost:8000/', { method: 'HEAD' });
+        if (response.ok) {
+          sonnerToast.success("Application Typhoon ASR Model startup complete.");
+          return true; // Stop polling
+        }
+      } catch (error) {
+        // Ignore errors, keep polling
+      }
+      return false;
+    };
+
+    const pollInterval = setInterval(async () => {
+      const isReady = await checkBackend();
+      if (isReady) {
+        clearInterval(pollInterval);
+      }
+    }, 1000);
+
+    // Initial check immediately
+    checkBackend().then(isReady => {
+      if (isReady) clearInterval(pollInterval);
+    });
+
+    return () => clearInterval(pollInterval);
+  }, []);
+
+  useEffect(() => {
     // Update segments when transcript changes
     const newSegments: TranscriptionSegment[] = [];
 
