@@ -1,5 +1,4 @@
 # Thai STT - Live Transcription & Translation System
-**Powered by 3PT Live Streaming**
 
 A professional, real-time Speech-to-Text (STT) application designed for live broadcasting. It utilizes the **Typhoon ASR** model from SCB10X for high-accuracy Thai transcription and integrates seamlessly with OBS/vMix via a transparent browser source.
 
@@ -84,4 +83,4 @@ npm run dev
 *   **Model Loading**: The model loads once at startup (`startup_event`). The first request might have a slight warmup delay.
 
 ## 📝 License
-Internal project for **3PT Live Streaming**.
+**Powered by 3PT Live Streaming**
