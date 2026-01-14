@@ -60,7 +60,24 @@ npm run dev:all
 # - Opens Browser
 ```
 
-### 3. Manual Start (Optional)
+### 3. Production Deployment (Single-Script)
+This mode serves the React frontend directly from Python, so you don't need to run 2 terminals.
+
+**1. Build the Frontend (One-time setup):**
+```bash
+npm run build
+```
+
+**2. Run the App:**
+```bash
+# Using Python directly (in venv)
+& .\.venv\Scripts\python.exe server.py
+```
+*The app will be available at `http://localhost:8000`*
+
+---
+
+### 4. Manual Dev Start (Optional)
 If you prefer to run services separately:
 
 **Backend:**
