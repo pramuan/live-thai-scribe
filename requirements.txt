@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+websockets
+numpy
+torch
+soundfile
+librosa
+# Note: NeMo toolkit and typhoon-asr might need manual installation or specific versions

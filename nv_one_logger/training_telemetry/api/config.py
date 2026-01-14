@@ -1,0 +1,2 @@
+class TrainingTelemetryConfig:
+    pass

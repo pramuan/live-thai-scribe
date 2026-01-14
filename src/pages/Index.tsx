@@ -29,6 +29,9 @@ const Index = () => {
 
   useEffect(() => {
     // Poll for backend readiness
+    let isMounted = true;
+    let timeoutId: NodeJS.Timeout;
+
     const checkBackend = async () => {
       try {
         // Use relative path to work on any IP/Port
@@ -46,19 +49,20 @@ const Index = () => {
       return false;
     };
 
-    const pollInterval = setInterval(async () => {
+    const poll = async () => {
+      if (!isMounted) return;
       const isReady = await checkBackend();
-      if (isReady) {
-        clearInterval(pollInterval);
+      if (!isReady && isMounted) {
+        timeoutId = setTimeout(poll, 1000);
       }
-    }, 1000);
+    };
 
-    // Initial check immediately
-    checkBackend().then(isReady => {
-      if (isReady) clearInterval(pollInterval);
-    });
+    poll();
 
-    return () => clearInterval(pollInterval);
+    return () => {
+      isMounted = false;
+      clearTimeout(timeoutId);
+    };
   }, []);
 
   useEffect(() => {
@@ -185,7 +189,6 @@ const Index = () => {
                   className="w-full"
                   size="lg"
                 >
-                  <Square className="mr-2 h-5 w-5" />
                   Stop Recording
                 </Button>
               )}
