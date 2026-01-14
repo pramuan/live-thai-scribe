@@ -31,10 +31,14 @@ const Index = () => {
     // Poll for backend readiness
     const checkBackend = async () => {
       try {
-        const response = await fetch('http://localhost:8000/', { method: 'HEAD' });
+        // Use relative path to work on any IP/Port
+        const response = await fetch('/api/health');
         if (response.ok) {
-          sonnerToast.success("Application Typhoon ASR Model startup complete.");
-          return true; // Stop polling
+          const data = await response.json();
+          if (data.model_loaded) {
+            sonnerToast.success("Application Typhoon ASR Model startup complete.");
+            return true; // Stop polling
+          }
         }
       } catch (error) {
         // Ignore errors, keep polling
