@@ -1,5 +1,7 @@
 # Thai STT - Live Transcription & Translation System
 
+![Thai STT - Live Transcription & Translation System](https://github.com/pramuan/live-thai-scribe/raw/main/thumbnail.jpg)
+
 A professional, real-time Speech-to-Text (STT) application designed for live broadcasting. It utilizes the **Typhoon ASR** model from SCB10X for high-accuracy Thai transcription and integrates seamlessly with OBS/vMix via a transparent browser source.
 
 ## 🚀 Key Features
